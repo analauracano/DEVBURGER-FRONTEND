@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 import Logo from '../../assets/logo.svg'
 import { Button } from '../../components/Button'
 import { api } from '../../services/api'
+import { useUser } from '../../hooks/UserContext'
 import {
     Container,
     Form,
@@ -21,6 +22,8 @@ import {
 
 export function Login() {
     const navigate = useNavigate()
+    const { putUserData } = useUser()
+
     const schema = yup.object({
         email: yup.string().email('Digite um e-mail válido').required('O e-mail é obrigatório'),
         password: yup.string().min(6, 'A senha deve conter pelo menos 6 caracteres').required('Digite uma senha'),
@@ -33,9 +36,8 @@ export function Login() {
     console.log(errors)
 
     const onSubmit = async (data) => {
-        const {data: 
-            {token},
-        } = await toast.promise(api.post('/session', {
+        const {data: userData}
+         = await toast.promise(api.post('/session', {
             email: data.email,
             password: data.password,
         }),
@@ -53,8 +55,8 @@ export function Login() {
 
             },
         );
-
-        localStorage.setItem('token', token)
+        
+        putUserData(userData)
 
 
     }
