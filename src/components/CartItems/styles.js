@@ -30,13 +30,9 @@ export const ButtonGroup = styled.div`
     }
 `
 
-export const EmptyCart = styled.p`
+export const EmptyCartWrapper = styled.p`
     font-size: 20px;
     text-align: center;
-    font-weight: bold;
-`
-
-export const ProductTotalPrice = styled.p`
     font-weight: bold;
 `
 

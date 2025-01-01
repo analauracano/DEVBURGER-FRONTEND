@@ -73,7 +73,7 @@ export const ProductsContainer = styled.div `
 `
 export const BackButton = styled(Link)`
     position: absolute; /* Fixa o botão na tela */
-    top: 470px; /* Distância do topo */
+    top: 500px; /* Distância do topo */
     left: 20px; /* Distância do lado esquerdo */
     padding: 10px 20px;
     font-size: 10px;

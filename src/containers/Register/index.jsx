@@ -59,6 +59,7 @@ export function Register() {
             toast.error('Falha no sistema! Tente novamente')
         }
     }
+    
     return (
         <Container>
             <LeftContainer>

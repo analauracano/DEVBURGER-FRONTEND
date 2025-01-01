@@ -8,6 +8,7 @@ export const Container = styled.div`
     background: linear-gradient( rgba(255, 255, 255, 0.5),
     rgba(255, 255, 255, 0.5)),url('${Background}');
     min-height: 100vh;
+    font-weight: bold;
 `
 
 export const Banner = styled.div`
@@ -49,10 +50,11 @@ export const Title = styled.div`
 
 export const Content = styled.div`
     display: grid;
-    grid-template-columns: 1fr 20%;
+    grid-template-columns: 1fr 29%;
     gap: 40px;
     width: 100%;
     max-width: 1200px;
     padding: 40px;
     margin: 0 auto;
+    font-weight: bold;
 `
