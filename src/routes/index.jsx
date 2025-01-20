@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 
-import { Admin, Cart, Checkout, CompletePayment, EditProduct, Home, Login, Menu, NewProduct, Orders, Product, Register } from '../containers'
+import { Cart, Checkout, CompletePayment, EditProduct, Home, Login, Menu, NewProduct, Orders, Product, Register } from '../containers/'
 import { UserLayout } from '../layouts/UserLayout'
 import { AdminLayout } from '../layouts/AdminLayout'
 
