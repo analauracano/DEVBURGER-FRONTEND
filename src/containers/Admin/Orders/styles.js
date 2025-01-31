@@ -26,4 +26,5 @@ export const FilterOption = styled.button`
     font-size: 18px;
     line-height: 20px;
     padding-bottom: 5px;
+    font-weight: 500;
 `
