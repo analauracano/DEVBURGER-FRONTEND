@@ -37,7 +37,7 @@ export function EditProduct() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const product = location.state?.product || {}; // Correção do erro ao acessar state
+    const product = location.state?.product || null;
 
     useEffect(() => {
         async function loadCategories() {
@@ -48,6 +48,7 @@ export function EditProduct() {
                 console.error('Erro ao carregar categorias:', error);
             }
         }
+        if (!product) return navigate("/admin/produtos")
         loadCategories();
     }, []);
 
@@ -82,6 +83,8 @@ export function EditProduct() {
         }, 2000);
     };
 
+    if (!product) return <></>;
+    
     return (
         <Container>
             <Form onSubmit={handleSubmit(onSubmit)}>
@@ -93,7 +96,7 @@ export function EditProduct() {
 
                 <InputGroup>
                     <Label>Preço</Label>
-                    <Input type="number" {...register('price')} defaultValue={product.price / 100} />
+                    <Input type="number" {...register('price')} defaultValue={product ? product.price / 100 : 0} />
                     <ErrorMessage>{errors?.price?.message}</ErrorMessage>
                 </InputGroup>
 
@@ -140,7 +143,7 @@ export function EditProduct() {
                         <Input
                             type="number"
                             {...register('price')}
-                            defaultValue={typeof product.price === 'number' ? product.price / 100 : '0'}
+                            defaultValue={typeof product.price === 'number' ? product.price / 100 : 0}
                         />
                         <Label>Produto em Oferta</Label>
                     </ContainerCheckBox>

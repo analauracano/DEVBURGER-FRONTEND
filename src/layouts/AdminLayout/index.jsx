@@ -1,22 +1,22 @@
-import { Outlet, Navigate } from "react-router-dom"
-import { SideNavAdmin } from "../../components"
-import { Container } from './styles'
+import { Outlet, Navigate } from "react-router-dom";
+import { SideNavAdmin } from "../../components/SideNavAdmin";
+import { Container } from "./styles";
 
-export function AdminLayout(){
-    const { admin: isAdmin } = JSON.parse(
-        localStorage.getItem('devburger:userdata')
-    )
+export function AdminLayout() {
+  const storedUser = localStorage.getItem("devburger:userdata");
+  const user = storedUser ? JSON.parse(storedUser) : null;
+  const isAdmin = user?.admin ?? false;
 
-    return isAdmin ? (
+  return isAdmin ? (
     <Container>
-    <SideNavAdmin />
-    <main>
+      <SideNavAdmin />
+      <main>
         <section>
-        <Outlet /> 
+          <Outlet />
         </section>
-    </main>
-    
+      </main>
     </Container>
-    ) : ( <Navigate to='login'/>
-    )
+  ) : (
+    <Navigate to="/login" />
+  );
 }

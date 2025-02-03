@@ -11,7 +11,7 @@ export const Container = styled.div`
 
 export const Form = styled.form`
     border-radius: 20px;
-    background-color: black; /* Alterado para fundo preto */
+    background-color: #363636; /* Alterado para fundo preto */
     padding: 32px;
     width: 100%;
     max-width: 380px;
@@ -38,8 +38,9 @@ export const Input = styled.input`
     border-radius: 5px;
     padding: 0 12px;
     border: none;
-    background-color: #222; /* Fundo escuro para combinar com o formulário */
-    color: white; /* Texto branco para legibilidade */
+    background-color: #f1f1f1; /* Fundo escuro para combinar com o formulário */
+    color: #1f1f1f;  /* Texto branco para legibilidade */
+    font-weight: 500;
 `;
 
 export const LabelUploads = styled.label`

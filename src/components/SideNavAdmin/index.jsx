@@ -5,10 +5,10 @@ import { Container, NavLinkContainer, NavLink, Footer} from './styles'
 import { useUser } from '../../hooks/UserContext'
 import { useResolvedPath } from 'react-router-dom'
 
-export function SideNavAdmin (){
+export function SideNavAdmin() {
     const { logout } = useUser()
     const { pathname } = useResolvedPath()
-
+    
     console.log(pathname)
 
     return(

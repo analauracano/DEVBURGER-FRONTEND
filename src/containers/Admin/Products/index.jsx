@@ -14,7 +14,7 @@ import { CheckCircle, XCircle, Pencil } from '@phosphor-icons/react'
 
 export function Product() {
     const [products, SetProducts] = useState([])
-    const navigate = useNavigate
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function loadProducts() {
@@ -36,7 +36,7 @@ export function Product() {
     }
 
     function editProduct(product) {
-        navigate('admin/editar-produto', { state: { product } })
+        navigate('/admin/editar-produto', { state: { product } })
     }
 
 
@@ -44,15 +44,16 @@ export function Product() {
         <Container>
             <TableContainer component={Paper} >
                 <Table sx={{ minWidth: 650 }} arial-label='simple table'>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Nome</TableCell>
-                            <TableCell align='center'>Preço</TableCell>
-                            <TableCell align='center'>Produto em Oferta</TableCell>
-                            <TableCell align='center'>Imagem do Produto</TableCell>
-                            <TableCell align='center'>Editar Produto</TableCell>
-                        </TableRow>
-                    </TableHead>
+                <TableHead sx={{ backgroundColor: "#363636"}}>
+  <TableRow>
+    <TableCell sx={{ color: "white" }}>Nome</TableCell>
+    <TableCell sx={{ color: "white" }} align="center">Preço</TableCell>
+    <TableCell sx={{ color: "white" }} align="center">Produto em Oferta</TableCell>
+    <TableCell sx={{ color: "white" }} align="center">Imagem do Produto</TableCell>
+    <TableCell sx={{ color: "white" }} align="center">Editar Produto</TableCell>
+  </TableRow>
+</TableHead>
+
                     <TableBody>
                         {products.map((product) => (
                             <TableRow

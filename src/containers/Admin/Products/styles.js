@@ -11,7 +11,8 @@ export const ProductImage = styled.img`
 export const EditButton = styled.button`
     border: 0;
     background-color: ${(props) => props.theme.darkWhite};
-    height: 32px;
+    height: 50px;
+    width: 50px;
     border-radius: 8px;
     margin: 0 auto;
 

@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import { Row } from './row';
 import { useEffect, useState } from 'react';
 import { api } from '../../../services/api';
-import { FilterOption, Filter } from './styles'
+import { FilterOption, Filter}from './styles'
 import { orderStatusOptions } from './orderStatus';
 
 export function Orders() {
@@ -22,21 +22,20 @@ export function Orders() {
     async function loadOrders() {
       const { data } = await api.get('orders');
 
+
       setOrders(data);
       setFilteredOrders(data)
-
-      console.log(data);
     }
     loadOrders();
   }, []);
 
   function createData(order) {
     return {
-      name: order.user.name,
-      orderId: order.id,
+      name: order.user?.name ?? "N/A",
+      orderId: order._id,
       date: order.createdAt,
-      status: order.status,
-      products: order.products,
+      status: order.status ?? "",
+      products: order.products ?? [],
     };
   }
 
@@ -46,7 +45,7 @@ export function Orders() {
   }, [filteredOrders]);
 
   function handleStatus(status) {
-    if(status.id === 0) {
+    if (status.id === 0) {
       setFilteredOrders(orders)
     } else {
       const newOrders = orders.filter((order) => order.status === status.value)
@@ -58,56 +57,58 @@ export function Orders() {
   }
 
   useEffect(() => {
-    if(activeStatus ===0) {
+    if (activeStatus === 0) {
       setFilteredOrders(orders)
     } else {
-      const statusIndex = orderStatusOptions.findIndex( item => item.id === activeStatus,
+      const statusIndex = orderStatusOptions.findIndex(item => item.id === activeStatus,
       )
 
       const newFilteredOrders = orders.filter((order) = order.status === orderStatusOptions[statusIndex].value,
-    )
-    
-    setFilteredOrdes(newFilteredOrders)
+      )
+
+      setFilteredOrders(newFilteredOrders)
     }
   }, [orders])
 
   return (
-<>
-    <Filter>
-      {orderStatusOptions.map((status) =>(
-      <FilterOption 
-      key={status.id}
-      onClick={() => handleStatus(status)}
-      $isActiveStatus={activeStatus === status.id}
-      >
-        
-        
-        
-        {status.label}</FilterOption>
-      ))}
-    </Filter>
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Pedido</TableCell>
-            <TableCell>Cliente</TableCell>
-            <TableCell>Data do Pedido</TableCell>
-            <TableCell>Status</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <Row 
-            key={row.orderId} 
-            row={row}
-            orders={orders}
-            setOrders={setOrders} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <Filter>
+        {orderStatusOptions.map((status) => (
+          <FilterOption
+            key={status.id}
+            onClick={() => handleStatus(status)}
+            $isActiveStatus={activeStatus === status.id}
+          >
+
+
+
+            {status.label}</FilterOption>
+        ))}
+      </Filter>
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+        <TableHead sx={{ backgroundColor: "#363636"}}>
+  <TableRow>
+    <TableCell sx={{ color: "white" }}>Nome</TableCell>
+    <TableCell sx={{ color: "white" }} align="center">Preço</TableCell>
+    <TableCell sx={{ color: "white" }} align="center">Produto em Oferta</TableCell>
+    <TableCell sx={{ color: "white" }} align="center">Imagem do Produto</TableCell>
+    <TableCell sx={{ color: "white" }} align="center">Editar Produto</TableCell>
+  </TableRow>
+</TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <Row
+                key={row.orderId}
+                row={row}
+                orders={orders}
+                setOrders={setOrders} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 }
+
+console.log("Componente Orders renderizado!");

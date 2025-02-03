@@ -36,36 +36,30 @@ export function Login() {
     console.log(errors)
 
     const onSubmit = async (data) => {
-        const {data: userData}
-         = await toast.promise(api.post('/session', {
+        const { data: userData } = await toast.promise(api.post('/session', {
             email: data.email,
             password: data.password,
-        }),
-            {
-                pending: 'Verificando seus dados',
-                success: {
-                    render() {
-                        setTimeout(() =>{
-                            if (userData?.admin){
-                                navigate('/admin/pedidos')
-                            } else {
-                                navigate('/')
-                            }
-                            
-                            
-                        }, 2000)
-                        return 'Seja Bem-vindo(a)'
-                    },
+        }), {
+            pending: 'Verificando seus dados',
+            success: {
+                render() {
+                    setTimeout(() => {
+                        if (userData?.admin) {
+                            navigate('/admin/pedidos');
+                        } else {
+                            navigate('/');
+                        }
+                    }, 2000);
+                    return 'Seja Bem-vindo(a)';
                 },
-                error: 'Email ou senha incorretos',
-
             },
-        );
-        
-        putUserData(userData)
-
-
-    }
+            error: 'Email ou senha incorretos',
+        });
+    
+        putUserData(userData);
+        localStorage.setItem("devburger:userdata", JSON.stringify(userData)); // Salva os dados no localStorage
+    };
+    
     return (
         <Container>
             <LeftContainer>

@@ -23,31 +23,32 @@ import {
 const schema = yup.object({
     name: yup.string().required('Digite o nome do produto'),
     price: yup.number().positive().required('Digite o preço do produto').typeError('Digite o preço do produto'),
-    category: yup.object().required('Escolha uma categoria'),
+    category: yup.object().shape({
+        id: yup.string().required('Escolha uma categoria'),
+        name: yup.string().required(),
+    }).required('Escolha uma categoria'),
     offer: yup.bool(),
-    file: yup.mixed().test('required', 'Escolha um arquivo para continuar', (value) => {
-        return value && value.length > 0
-    }).test('fileSize', 'Carregue arquivos até 5mb', (value) => {
-        return value && value.length > 0 && value[0].size <= 5000 
-    }).test('type', 'Carregue apenas imagens PNG ou JPEG', (value) => {
-        return ( value && value.length >0 && (value[0].type === 'image/jpeg' || value[0].type === 'image/png')
-        )
-    }),
+    file: yup.mixed()
+        .test('required', 'Escolha um arquivo para continuar', (value) => value && value.length > 0)
+        .test('fileSize', 'Carregue arquivos até 5mb', (value) => value && value.length > 0 && value[0].size <= 5 * 1024 * 1024) // Convertendo para bytes
+        .test('type', 'Carregue apenas imagens PNG ou JPEG', (value) => value && value.length > 0 && ['image/jpeg', 'image/png'].includes(value[0].type)),
 }).required();
 
 export function NewProduct() {
     const [fileName, setFileName] = useState(null);
     const [categories, setCategories] = useState([]);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function loadCategories() {
             try {
                 const { data } = await api.get('/categories');
+                console.log("Categorias carregadas:", data);
                 setCategories(data);
             } catch (error) {
                 console.error("Erro ao carregar categorias:", error);
+                toast.error("Erro ao carregar categorias");
             }
         }
         loadCategories();
@@ -59,27 +60,30 @@ export function NewProduct() {
         control,
         formState: { errors },
     } = useForm({
-        resolver: yupResolver(schema)
+        resolver: yupResolver(schema),
+        defaultValues: {
+            category: null, // Garante que o campo comece vazio
+        }
     });
 
     const onSubmit = async (data) => {
         const productFormData = new FormData();
     
-        productFormData.append('name', data.name)
-        productFormData.append('price', data.price * 100)
-        productFormData.append('category_id', data.category.id)
-        productFormData.append('file', data.file[0])
-        productFormData.append('offer', data.offer)
+        productFormData.append('name', data.name);
+        productFormData.append('price', data.price * 100);
+        productFormData.append('category_id', data.category.id);
+        productFormData.append('file', data.file[0]);
+        productFormData.append('offer', data.offer);
 
-        await toast.promise( api.post('/products', productFormData), {
+        await toast.promise(api.post('/products', productFormData), {
             pending: 'Adicionando o produto...',
             success: 'Produto criado com sucesso',
             error: 'Falha ao adicionar o produto, tente novamente',
-        })
+        });
 
         setTimeout(() => {
-            navigate('admin/produtos')
-        }, 2000)
+            navigate('/admin/produtos');
+        }, 2000);
     };
 
     return (
@@ -126,19 +130,21 @@ export function NewProduct() {
                                 getOptionLabel={(category) => category.name}
                                 getOptionValue={(category) => category.id}
                                 placeholder="Categorias"
-                                menuPortalTarget={document.body}
-                                onChange={(selected) => field.onChange(selected?.id)}
+                                isClearable
+                                defaultValue={null}
+                                onChange={(selected) => field.onChange(selected)}
                             />
                         )}
                     />
                     <ErrorMessage>{errors?.category?.message}</ErrorMessage>
                 </InputGroup>
+
                 <InputGroup>
-                                <ContainerCheckBox>
-                                    <input type='checkbox'  {...register('offer')}/>
-                                    <Label>Produto em Oferta</Label>
-                                </ContainerCheckBox>
-                                </InputGroup>
+                    <ContainerCheckBox>
+                        <input type='checkbox' {...register('offer')} />
+                        <Label>Produto em Oferta</Label>
+                    </ContainerCheckBox>
+                </InputGroup>
 
                 <SubmitButton type="submit">Adicionar Produto</SubmitButton>
             </Form>

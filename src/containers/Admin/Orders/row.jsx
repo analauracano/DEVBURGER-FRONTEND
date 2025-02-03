@@ -1,4 +1,3 @@
-import { Category } from '@mui/icons-material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Box from '@mui/material/Box';
@@ -15,33 +14,32 @@ import { useState } from 'react';
 import { formatDate } from '../../../utils/formatDate';
 import { ProductImage, SelectStatus } from './styles'
 import { orderStatusOptions } from './orderStatus';
+import { api } from '../../../services/api';
 
-export function Row({row, setOrders,orders}) {
+export function Row({ row, setOrders, orders }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false)
 
-  async function newStatusOrder(id, status){
+  async function newStatusOrder(id, status) {
 
     try {
       setLoading(true)
-    await api.put(`orders/${id}`, {status})
+      await api.put(`orders/${id}`, { status })
 
-    const newOrders = orders.map(order => order._id === id ? {...order, status} : order,
+      const newOrders = orders.map(order => order._id === id ? { ...order, status } : order)
 
-    ) 
-
-    setOrders(newOrders)
-    } catch(err){
+      setOrders(newOrders)
+    } catch (err) {
       console.log(err)
     }
-    finally{
+    finally {
       loading(false)
     }
   }
 
   return (
     <>
-      <TableRow sx={{'& > *': {borderBottom: 'unset'} }}>
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell>
           <IconButton
             aria-label="expand-row"
@@ -57,12 +55,12 @@ export function Row({row, setOrders,orders}) {
         <TableCell>{row.name}</TableCell>
         <TableCell>{formatDate(row.date)}</TableCell>
         <TableCell>
-          <SelectStatus options={orderStatusOptions.filter( status => status.id !== 5)} placeholder='Status'
-          defaultValue={ orderStatusOptions.find(status => status.value === row.status || null, 
-          )}
-          onChange={ status => newStatusOrder(row.orderId, status.value) }
-          isLoading={loading}
-          menuPortalTarget={document.body}
+          <SelectStatus options={orderStatusOptions.filter(status => status.id !== 5)} placeholder='Status'
+            defaultValue={orderStatusOptions.find(status => status.value === row.status || null,
+            )}
+            onChange={status => newStatusOrder(row.orderId, status.value)}
+            isLoading={loading}
+            menuPortalTarget={document.body}
           />
         </TableCell>
       </TableRow>

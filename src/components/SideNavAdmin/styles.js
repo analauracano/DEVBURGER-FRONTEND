@@ -10,7 +10,7 @@ export const Container = styled.nav`
 
     img {
         width: 60%;
-        margin: 40px 0;
+        margin: 40px ;
     }
 `
 export const NavLinkContainer = styled.div`
