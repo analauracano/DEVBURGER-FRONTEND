@@ -30,7 +30,7 @@ export const Container = styled.div`
             margin-bottom: 20px;
             background-color: #484848;
             color: #ffffff;
-            width: 100%;
+            width: 92%;
             padding: 15px;
             text-align: center;
             border-top-left-radius: 20px;
@@ -50,7 +50,7 @@ export const Container = styled.div`
         .delivery-tax {
             grid-area: delivery-tax;
             padding-left: 20px;
-        }
+         }
 
         .delivery-tax-price {
             grid-area: delivery-tax-price;

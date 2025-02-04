@@ -15,8 +15,8 @@ export const ButtonGroup = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 30px;
-        width: 30px;
+        height: 50px;
+        width: 50px;
         color: #fff;
         border-radius: 4px;
         background-color: #9758a6;

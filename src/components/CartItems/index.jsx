@@ -34,18 +34,14 @@ export function CartItems() {
                             </Table.Td>
                             <Table.Td>
                                 <ButtonGroup>
-                                    <button 
-                                        type="button" 
-                                        onClick={() => decreaseProduct(product.id)} 
-                                        aria-label={`Diminuir quantidade de ${product.name}`}
+                                    <button  
+                                        onClick={() => decreaseProduct(product.id)}
                                     >
                                         -
                                     </button>
                                     <span>{product.quantity}</span>
                                     <button 
-                                        type="button" 
-                                        onClick={() => increaseProduct(product.id)} 
-                                        aria-label={`Aumentar quantidade de ${product.name}`}
+                                        onClick={() => increaseProduct(product.id)}
                                     >
                                         +
                                     </button>
